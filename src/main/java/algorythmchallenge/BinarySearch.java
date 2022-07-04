@@ -1,4 +1,4 @@
-package knapsack;
+package algorythmchallenge;
 
 import java.util.Arrays;
 
