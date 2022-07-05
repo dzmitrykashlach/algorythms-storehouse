@@ -1,64 +1,65 @@
 package algorythmchallenge;
 
-import java.util.Random;
 // https://www.geeksforgeeks.org/find-number-of-islands/
 public class NumberOfIslands {
     public int ROWS;
     public int COLS;
 
-    public int numIslands(char[][] grid) {
-        int countIslands = 0;
-        for (int row = 0; row < grid.length; row++) {
-            boolean visited[][] = new boolean[grid.length][grid[row].length];
-
-            for (int col = 0; col < grid[row].length; col++) {
-                visited[row][col] = true;
-                if (isSafe(grid, row, col, visited)) {
-                    DFS(grid, row, col, visited);
-                    countIslands++;
+    public int numIslands(int[][] M) {
+        int ROW = M.length;
+        int COL = M[0].length;
+        int count = 0;
+        for (int i = 0; i < ROW; i++)
+        {
+            for (int j = 0; j < COL; j++)
+            {
+                if (M[i][j] == 1)
+                {
+                    M[i][j] = 0;
+                    count++;
+                    DFS(M, i + 1, j, ROW, COL);   //right side traversal
+                    DFS(M, i - 1, j, ROW, COL);   //left side traversal
+                    DFS(M, i, j + 1, ROW, COL);   //upward side traversal
+                    DFS(M, i, j - 1, ROW, COL);   //downward side traversal
+                    DFS(M, i + 1, j + 1, ROW, COL); //upward-right side traversal
+                    DFS(M, i - 1, j - 1, ROW, COL); //downward-left side traversal
+                    DFS(M, i + 1, j - 1, ROW, COL); //downward-right side traversal
+                    DFS(M, i - 1, j + 1, ROW, COL); //upward-left side traversal
                 }
             }
         }
-        return countIslands;
+        return count;
     }
 
-    public void DFS(char grid[][], int row, int col, boolean visited[][]) {
-        // These arrays are used to get row and column numbers
-        // of 8 neighbors of a given cell
-        int rowNbr[] = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
-        int colNbr[] = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
-
-        // Mark this cell as visited
-        visited[row][col] = true;
-
-        // Recur for all connected neighbours
-        for (int k = 0; k < 8; ++k)
-            if (isSafe(grid, row + rowNbr[k], col + colNbr[k], visited))
-                DFS(grid, row + rowNbr[k], col + colNbr[k], visited);
-    }
-
-    boolean isSafe(char M[][], int row, int col,
-                   boolean visited[][]) {
-        return (row >= 0) && (row < this.ROWS) && (col >= 0) && (col < this.COLS) && (M[row][col] == 1 && !visited[row][col]);
-    }
-
-    public char[][] generateLandscape(int rows, int cols) {
-        this.ROWS = rows;
-        this.COLS = cols;
-        char[][] grid = new char[rows][cols];
-        Random random = new Random();
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                boolean isLand = random.nextBoolean();
-                grid[row][col] = isLand ? "1".charAt(0) : "0".charAt(0);
-            }
+    public void DFS(int[][] M, int i, int j, int ROW, int COL) {
+        // Base condition
+        // if i less than 0 or j less than 0 or i greater than ROW-1 or j greater than COL- or if M[i][j] != 1 then we will simply return
+        if (i < 0 || j < 0 || i > (ROW - 1) || j > (COL - 1) || M[i][j] != 1)
+        {
+            return;
         }
-        return grid;
+
+        if (M[i][j] == 1)
+        {
+            M[i][j] = 0;
+            DFS(M, i + 1, j, ROW, COL);   //right side traversal
+            DFS(M, i - 1, j, ROW, COL);   //left side traversal
+            DFS(M, i, j + 1, ROW, COL);   //upward side traversal
+            DFS(M, i, j - 1, ROW, COL);   //downward side traversal
+            DFS(M, i + 1, j + 1, ROW, COL); //upward-right side traversal
+            DFS(M, i - 1, j - 1, ROW, COL); //downward-left side traversal
+            DFS(M, i + 1, j - 1, ROW, COL); //downward-right side traversal
+            DFS(M, i - 1, j + 1, ROW, COL); //upward-left side traversal
+        }
     }
 
     public static void main(String[] args) {
         NumberOfIslands numberOfIslands = new NumberOfIslands();
-        char[][] grid = numberOfIslands.generateLandscape(5, 5);
+        int[][] grid = {{1, 1, 1, 1, 1},
+                        {1, 0, 0, 0, 1},
+                        {1, 0, 1, 0, 1},
+                        {1, 1, 1, 0, 1},
+                        {0, 0, 0, 0, 1}};
         System.out.println("==================================================================");
         System.out.println(numberOfIslands.numIslands(grid));
     }
