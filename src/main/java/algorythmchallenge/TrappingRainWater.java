@@ -1,65 +1,40 @@
 package algorythmchallenge;
 
-import java.util.Arrays;
-
 // https://www.geeksforgeeks.org/trapping-rain-water/
 public class TrappingRainWater {
 
-    private int levelCount = 1;
-    private int maxHeight = 1;
-    private int waterCount = 0;
+    public int maxWater(int[] arr, int n) {
+        // To store the maximum water
+        // that can be stored
+        int res = 0;
 
-    public TrappingRainWater(int[] trap) {
-        this.maxHeight = Arrays.stream(trap).max().getAsInt();
+        // For every element of the array
+        // except first and last element
+        for (int i = 1; i < n - 1; i++) {
+
+            // Find maximum element on its left
+            int left = arr[i];
+            for (int j = 0; j < i; j++) {
+                left = Math.max(left, arr[j]);
+            }
+
+            // Find maximum element on its right
+            int right = arr[i];
+            for (int j = i + 1; j < n; j++) {
+                right = Math.max(right, arr[j]);
+            }
+
+            // Update maximum water value
+            res += Math.min(left, right) - arr[i];
+        }
+        return res;
     }
 
     public static void main(String[] args) {
-//        int[] trap = new int[]{0, 2, 0, 2, 0, 1, 1, 0, 1, 0, 1};
-        int[] trap = new int[]{0, 2, 0, 2};
-        TrappingRainWater trappingRainWater = new TrappingRainWater(trap);
+//        int[] trap = new int[]{0, 2, 0, 0, 2, 1, 1, 2, 0, 2, 1};
+        int[] trap = new int[]{0, 2, 0, 0, 0, 2};
+        int length = trap.length;
         System.out.println("==================================================");
-        System.out.println(trappingRainWater.trap(trap));
+        System.out.println(new TrappingRainWater().maxWater(trap, length));
     }
-
-//    check if we are not going behind int[0] to the left;
-    private int checkLeftBound(int i) {
-        return (Math.max((i - 1), 0));
-    }
-
-    private int iterateGap(int[] trap, int start, int levelCount) {
-        int levelWaterCount = 1;
-        // we are moving horisontally to the right border in order to count water on the current level
-        while (trap[start] < trap[start + levelWaterCount-1]) {
-            levelWaterCount++;
-            if ((start + levelCount) < trap.length - 1) {
-                break;
-            }
-        }
-        // we are adding water from this level to overall water counter;
-        waterCount = waterCount + levelWaterCount;
-//========================= DEBUG ==========================================================================
-        int leftBorder = trap[checkLeftBound(start)];
-        // we are checking if upper level if more wide then current using lef border;
-        while (trap[start] < trap[checkLeftBound(leftBorder)]) {
-            leftBorder--;
-        }
-        //
-        while (levelCount < maxHeight) {
-            levelCount++;
-            waterCount = waterCount + iterateGap(trap, leftBorder, levelCount);
-        }
-        return waterCount;
-    }
-
-    private int trap(int[] trap) {
-        int globalWaterCount = 0;
-        for (int i = 1; i < trap.length - 1; i++) {
-//            check if left neighbour are bigger, look for next right neighbour which is bigger;
-            if (trap[i] < trap[i - 1]) {
-                globalWaterCount = globalWaterCount + iterateGap(trap, i, 0);
-            }
-        }
-        return globalWaterCount;
-    }
-
 }
