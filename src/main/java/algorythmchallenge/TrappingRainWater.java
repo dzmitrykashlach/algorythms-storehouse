@@ -38,7 +38,8 @@ public class TrappingRainWater {
         // we are adding water from this level to overall water counter;
         waterCount = waterCount + levelWaterCount;
 //========================= DEBUG ==========================================================================
-        int leftBorder = trap[checkLeftBound(start)];
+//        trying to get value to the left from start point;
+        int leftBorder = trap[checkLeftBound(start-1)];
         // we are checking if upper level if more wide then current using lef border;
         while (trap[start] < trap[checkLeftBound(leftBorder)]) {
             leftBorder--;
