@@ -45,7 +45,8 @@ public class TextJustification {
 
     public static void main(String[] args) {
         int lineLength = 24;
-        String[] input = new String[]{"Here", "is", "one", "more", "option", "to", "achieve", "excellent", "result"};
+        String[] input = new String[]{"Here", "is", "one", "more", "option", "to", "achieve", "excellent", "result",
+        "with","perfect","but","yet","unpredictable","high","quality"};
         TextJustification textJustification = new TextJustification();
         List<String>[] output = textJustification.process(input, lineLength);
         try {
