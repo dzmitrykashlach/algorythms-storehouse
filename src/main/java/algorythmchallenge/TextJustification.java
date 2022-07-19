@@ -30,6 +30,7 @@ public class TextJustification {
                       int endSpaces = 0;
                 }
             }
+//            TODO
 //            Case 1a Single word in the line. We justify left(add whitespaces to the right)
 //            Case 1b Multiple words per line. We need to distribute whitespaces between all the words.
 //            Calculate reminder to assign more spaces to empty slots on the left
