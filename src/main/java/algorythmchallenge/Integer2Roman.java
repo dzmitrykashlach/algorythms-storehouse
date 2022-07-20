@@ -43,9 +43,9 @@ public class Integer2Roman {
             }
             if (digit == 4) {
                 switch (position) {
-//                    case 1 -> roman.append(mapping.get(1));
+                    case 1 -> roman.append(String.join("",mapping.get(0),mapping.get(1)));
                     case 2 -> roman.append(String.join("",mapping.get(2),mapping.get(3)));
-//                    case 3 -> roman.append(mapping.get(5));
+                    case 3 -> roman.append(String.join("",mapping.get(4),mapping.get(5)));
                 }
 
             }
@@ -57,20 +57,20 @@ public class Integer2Roman {
                 }
             }
             if (digit > 5 & digit < 9) {
-// TODO
                 switch (position) {
-                    case 1 -> roman.append(mapping.get(1));
+                    case 1 -> roman.append(mapping.get(1))
+                            .append(String.join("", Collections.nCopies(digit-5, mapping.get(0))));
                     case 2 -> roman.append(mapping.get(3))
                             .append(String.join("", Collections.nCopies(digit-5, mapping.get(2))));
-                    case 3 -> roman.append(mapping.get(5));
+                    case 3 -> roman.append(mapping.get(5))
+                            .append(String.join("", Collections.nCopies(digit-5, mapping.get(4))));
                 }
             }
             if (digit == 9) {
-// TODO
                 switch (position) {
-//                    case 1 -> roman.append(mapping.get(1));
+                    case 1 -> roman.append(String.join("",mapping.get(0),mapping.get(2)));
                     case 2 -> roman.append(String.join("",mapping.get(2),mapping.get(4)));
-//                    case 3 -> roman.append(mapping.get(5));
+                    case 3 -> roman.append(String.join("",mapping.get(4),mapping.get(6)));
                 }
             }
         }
